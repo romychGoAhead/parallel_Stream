@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 
@@ -31,15 +32,15 @@ public class infoController {
                 .limit(maxSize)
                 .reduce(0, (a, b) -> a + b);
         long timeConsumed = System.currentTimeMillis() - startTime;
-        logger.debug("время работы" + timeConsumed);
+        logger.info("время работы" + timeConsumed);
 
 
         startTime = System.currentTimeMillis();
-        Integer reduce = Stream.iterate(1, a -> a + 1)
-                .limit(maxSize)
-                .reduce(0, Integer::sum);
+        long sum = LongStream.rangeClosed(1, 1_000_000)
+                .sum();
+
         timeConsumed = System.currentTimeMillis() - startTime;
-        logger.debug("время работы после оптимизации" + timeConsumed);
+        logger.info("время работы после оптимизации" + timeConsumed);
 
 
 
